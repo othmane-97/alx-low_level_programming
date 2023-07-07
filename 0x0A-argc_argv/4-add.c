@@ -1,63 +1,62 @@
 #include <stdio.h>
-#include "main.h"
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 /**
- * _atoi - Converts a string to an integer
- * @s: The string to be converted
+ * check_num - Checks if a string contains only digits
+ * @str: The string to check
  *
- * Return: The integer converted from the string
+ * Return: 1 if the string contains only digits, 0 otherwise
  */
-int _atoi(char *s)
+int check_num(char *str)
 {
-int i, d, n, len, f, digit;
-i = 0;
-d = 0;
-n = 0;
-len = 0;
-f = 0;
-digit = 0;
-while (s[len] != '\0')
-len++;
-while (i < len && f == 0)
+unsigned int count;
+
+count = 0;
+while (count < strlen(str))
 {
-if (s[i] == '-')
-++d;
-if (s[i] >= '0' && s[i] <= '9')
+if (!isdigit(str[count]))
 {
-digit = s[i] - '0';
-if (d % 2)
-digit = -digit;
-n = n * 10 + digit;
-f = 1;
-if (s[i + 1] < '0' || s[i + 1] > '9')
-break;
-f = 0;
-}
-i++;
-}
-if (f == 0)
 return (0);
-return (n);
+}
+
+count++;
+}
+return (1);
 }
 
 /**
- * main - Multiplies two numbers
- * @argc: Number of arguments
+ * main - Prints the sum of valid integer arguments
+ * @argc: Count of arguments
  * @argv: Array of arguments
  *
- * Return: 0 (Success), 1 (Error)
+ * Return: Always 0 (Success)
  */
 int main(int argc, char *argv[])
 {
-int result, num1, num2;
-if (argc < 3 || argc > 3)
+int count;
+int str_to_int;
+int sum = 0;
+
+count = 1;
+while (count < argc)
+{
+if (check_num(argv[count]))
+{
+str_to_int = atoi(argv[count]);
+sum += str_to_int;
+		}
+else
 {
 printf("Error\n");
 return (1);
 }
-num1 = _atoi(argv[1]);
-num2 = _atoi(argv[2]);
-result = num1 *num2;
-printf("%d\n", result);
+
+count++;
+}
+
+printf("%d\n", sum);
+
 return (0);
 }
